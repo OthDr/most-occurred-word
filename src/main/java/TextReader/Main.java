@@ -7,12 +7,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author DOTH
  */
 public class Main {
@@ -41,10 +42,10 @@ public class Main {
         try {
             String line;
             String[] words;
-
+            System.out.println("\n ___________________________\t TEXT \t______________________________ \n");
             while ((line = inputBuffer.readLine()) != null) {
                 words = (line.split(" "));
-
+                System.out.println("| " + line);
                 for (String word : words) {
 
                     //Filtering ad ignoring ponctuation
@@ -63,7 +64,7 @@ public class Main {
                     } else if (word.contains("!")) {
                         word = word.replace("!", "");
                     }
-                    
+
                     if (!word.isBlank()) {// if the word is not an empty String or white space
                         allWords.add(word);
 
@@ -75,9 +76,8 @@ public class Main {
 
                     }
 
-                    
-                    // ------------------ just a bonus ------------------------
-                    if (!isAddedYet(uniqueWords, word) && !word.isBlank() ) {//only to fill a list of each word in the file in only one frequency
+                    // ------------------------ + ------------------------
+                    if (!isAddedYet(uniqueWords, word) && !word.isBlank()) {//only to fill a list of each word in the file in only one frequency
                         uniqueWords.add(word);
                     }
                     // --------------------------------------------------------
@@ -85,22 +85,24 @@ public class Main {
                 }
 
             }
+            System.out.println("\n ___________________________+\t" + allWords.size() + "words  \t+___________________________ \n");
             //System.out.println(allWords); // 2583 word
 
-            System.out.println("This text has "+ uniqueWords.size() + "unique words.\n\n\n **********************\t The Result\t********************************************\n "); // 844 unique word
-            
-            String mostOccuredWord = ""; // init of an int with a minimum value
-            int maxOccurence = Integer.MIN_VALUE;
+            System.out.println("\nThis text has " + uniqueWords.size() + " unique words.\n ********************************************\t The Result \t********************************************\n "); // 844 unique word
+
+            String mostOccuredWord = "";
+            int maxOccurence = Integer.MIN_VALUE; // initialize of an int with a minimum value
             for (String word : wordNcount.keySet()) {
                 //System.out.println(word + "=>" + wordNcount.get(word));
-                if( wordNcount.get(word) > maxOccurence){
+                if (wordNcount.get(word) > maxOccurence) {
                     maxOccurence = wordNcount.get(word);
                     mostOccuredWord = word;
                 }
             }
-            
-            System.out.println("\t\t The most occured word is: '"+mostOccuredWord+"' ==> "+maxOccurence+" times\n\n ***************************************************************************");
-            
+
+            System.out.println("\t\t The most occured word is: '" + mostOccuredWord + "' ==> " + maxOccurence + " times\n\n ***************************************************************************");
+
+            List<String> wordKeyList = new ArrayList<>(wordNcount.keySet());
 
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
