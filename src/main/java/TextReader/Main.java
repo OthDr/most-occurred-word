@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,6 +21,7 @@ public class Main {
         return words.contains(word);
     }
 
+
     public static void main(String[] args) throws FileNotFoundException {
 
         String text;
@@ -34,16 +34,16 @@ public class Main {
         String fileName = "textFile.txt";
 
         Path path = Paths.get(fileName);
-
         FileReader fileReader = new FileReader(path.toString());
-
         BufferedReader inputBuffer = new BufferedReader(fileReader);
 
         try {
             String line;
             String[] words;
             System.out.println("\n ___________________________\t TEXT \t______________________________ \n");
+
             while ((line = inputBuffer.readLine()) != null) {
+
                 words = (line.split(" "));
                 System.out.println("| " + line);
                 for (String word : words) {
@@ -66,6 +66,7 @@ public class Main {
                     }
 
                     if (!word.isBlank()) {// if the word is not an empty String or white space
+
                         allWords.add(word);
 
                         //get word frequency int the map otherwise get 0 count
@@ -73,19 +74,16 @@ public class Main {
 
                         wordFreq++;
                         wordNcount.put(word, wordFreq);
-
                     }
-
                     // ------------------------ + ------------------------
                     if (!isAddedYet(uniqueWords, word) && !word.isBlank()) {//only to fill a list of each word in the file in only one frequency
                         uniqueWords.add(word);
                     }
                     // --------------------------------------------------------
-
                 }
 
             }
-            System.out.println("\n ___________________________+\t" + allWords.size() + "words  \t+___________________________ \n");
+            System.out.println("\n ___________________________+\t" + allWords.size() + " words  \t+___________________________ \n");
             //System.out.println(allWords); // 2583 word
 
             System.out.println("\nThis text has " + uniqueWords.size() + " unique words.\n ********************************************\t The Result \t********************************************\n "); // 844 unique word
@@ -103,6 +101,8 @@ public class Main {
             System.out.println("\t\t The most occured word is: '" + mostOccuredWord + "' ==> " + maxOccurence + " times\n\n ***************************************************************************");
 
             List<String> wordKeyList = new ArrayList<>(wordNcount.keySet());
+
+            //System.out.println(wordNcount.get("Le")+wordNcount.get("le"));
 
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
